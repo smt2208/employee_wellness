@@ -1,0 +1,7 @@
+ultralytics>=8.0.0        # YOLOv8 person detection
+boxmot>=10.0.0            # BoTSORT tracker with Re-ID support
+rtmlib>=0.0.13            # RTMPose pose estimation
+opencv-python>=4.8.0      # Video capture and preprocessing
+numpy>=1.24.0             # Numerical operations
+onnxruntime>=1.16.0       # RTMPose model inference backend
+gdown>=4.7.0              # Re-ID model weight download helper
