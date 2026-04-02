@@ -47,12 +47,21 @@ class PoseEstimator:
         """
         try:
             rtmpose_ctor = cast(Callable[..., Any], RTMPose)
-            # RTMPose-m body model — good balance of speed and accuracy
-            self.model = rtmpose_ctor(
-                pose="body",              # body keypoints (17 points)
-                backend=RTMPOSE_BACKEND,
-                device=RTMPOSE_DEVICE,
-            )
+            # Prefer RTMPose-m where the installed rtmlib version supports it.
+            try:
+                self.model = rtmpose_ctor(
+                    pose="body",              # body keypoints (17 points)
+                    backend=RTMPOSE_BACKEND,
+                    device=RTMPOSE_DEVICE,
+                    model_size="m",
+                )
+            except TypeError:
+                # Backward-compatible fallback for rtmlib versions without model_size.
+                self.model = rtmpose_ctor(
+                    pose="body",              # body keypoints (17 points)
+                    backend=RTMPOSE_BACKEND,
+                    device=RTMPOSE_DEVICE,
+                )
             logger.info(
                 f"RTMPose loaded | backend={RTMPOSE_BACKEND} | device={RTMPOSE_DEVICE}"
             )
